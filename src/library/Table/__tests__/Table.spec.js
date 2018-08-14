@@ -16,6 +16,8 @@ import examples from '../../../website/app/demos/Table/examples';
 import testDemoExamples from '../../../../utils/testDemoExamples';
 import testThemeOverrides from '../../../../utils/testThemeOverrides';
 
+import type { RenderFn } from '../Table';
+
 const defaultProps = {
   data: [
     { aa: 'aa0', ab: 'ab0', ac: 'ac0', ad: 'ad0' },
@@ -486,6 +488,136 @@ describe('Table', () => {
       const sortedData = wrapper.find(TableBase).props().data;
 
       expect(sortedData).toMatchSnapshot();
+    });
+  });
+
+  describe('render props', () => {
+    describe('"row"', () => {
+      let row: RenderFn, table, tableRows;
+
+      beforeEach(() => {
+        row = jest
+          .fn()
+          .mockImplementation(({ props: { children } }) => (
+            <tr data-id="custom-table-row">{children}</tr>
+          ));
+
+        [, table] = mountTable({
+          columns: [{ content: 'AA', key: 'aa' }],
+          data: [{ aa: 'aa0', ab: 'ab0', ac: 'ac0', ad: 'ad0', row }]
+        });
+
+        tableRows = table.find('tbody tr');
+      });
+
+      afterEach(() => {
+        row.mockRestore();
+      });
+
+      it('calls render prop with expected arguments', () => {
+        expect(row.mock.calls[0]).toMatchSnapshot();
+      });
+
+      it('renders expected content', () => {
+        expect(tableRows).toMatchSnapshot();
+      });
+    });
+
+    describe('"cell"', () => {
+      let cell: RenderFn, table, tableCells;
+
+      beforeEach(() => {
+        cell = jest
+          .fn()
+          .mockImplementation(({ props: { children } }) => (
+            <td data-id="custom-table-cell">{children}</td>
+          ));
+
+        [, table] = mountTable({
+          columns: [{ content: 'AA', key: 'aa', cell }],
+          data: [{ aa: 'aa0', ab: 'ab0', ac: 'ac0', ad: 'ad0' }]
+        });
+
+        tableCells = table.find('td');
+      });
+
+      afterEach(() => {
+        cell.mockRestore();
+      });
+
+      it('calls render prop with expected arguments', () => {
+        expect(cell.mock.calls[0]).toMatchSnapshot();
+      });
+
+      it('renders expected content', () => {
+        expect(tableCells).toMatchSnapshot();
+      });
+    });
+
+    describe('"headerCell"', () => {
+      let headerCell: RenderFn, table, tableHeaderCells;
+
+      beforeEach(() => {
+        headerCell = jest
+          .fn()
+          .mockImplementation(({ props: { children } }) => (
+            <th data-id="custom-table-header-cell">{children}</th>
+          ));
+
+        [, table] = mountTable({
+          columns: [{ content: 'AA', key: 'aa', headerCell }],
+          data: [{ aa: 'aa0', ab: 'ab0', ac: 'ac0', ad: 'ad0' }]
+        });
+
+        tableHeaderCells = table.find('th');
+      });
+
+      afterEach(() => {
+        headerCell.mockRestore();
+      });
+
+      it('calls render prop with expected arguments', () => {
+        expect(headerCell.mock.calls[0]).toMatchSnapshot();
+      });
+
+      it('renders expected content', () => {
+        expect(tableHeaderCells).toMatchSnapshot();
+      });
+
+      describe('when sortable', () => {
+        let sortableHeaderCell: RenderFn, table, tableHeaderCells;
+
+        beforeEach(() => {
+          sortableHeaderCell = jest
+            .fn()
+            .mockImplementation(({ props: { children } }) => (
+              <th data-id="custom-sortable-table-header-cell">{children}</th>
+            ));
+
+          [, table] = mountTable({
+            columns: [
+              { content: 'AA', key: 'aa', headerCell: sortableHeaderCell }
+            ],
+            data: [{ aa: 'aa0', ab: 'ab0', ac: 'ac0', ad: 'ad0' }],
+            sortable: true,
+            defaultSort: { key: 'aa' }
+          });
+
+          tableHeaderCells = table.find('th');
+        });
+
+        afterEach(() => {
+          sortableHeaderCell.mockRestore();
+        });
+
+        it('calls render prop with expected arguments', () => {
+          expect(sortableHeaderCell.mock.calls[0]).toMatchSnapshot();
+        });
+
+        it('renders expected content', () => {
+          expect(tableHeaderCells).toMatchSnapshot();
+        });
+      });
     });
   });
 });

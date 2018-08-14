@@ -9,7 +9,7 @@ type Props = {
   /** Column definitions ([see Column type for details](#Column-type)) */
   columns?: Columns,
   /** Row data ([see example for more details](#basic)) */
-  data: Array<Object>,
+  data: Rows,
   /** Initially selected rows when `selectable = true`. Primarily for use with uncontrolled components. */
   defaultSelectedRows?: Array<Object>,
   /** Initially sorted column & direction. Primarily for use with uncontrolled components. */
@@ -87,7 +87,9 @@ export type Columns = Array<Column>;
 
 // See demos/Table/index.js additionalTypes for descriptions
 type Column = {
+  cell?: RenderFn,
   content: React$Node,
+  headerCell?: RenderFn,
   key: string,
   label?: string,
   maxWidth?: number | string,
@@ -112,10 +114,17 @@ export type Messages = {
 export type Row = Object;
 export type Rows = Array<Row>;
 
+export type RenderFn = (props: RenderProps) => React$Node;
+type RenderProps = {
+  props: Object,
+  state?: Object,
+  helpers?: Object
+};
+
 const generateColumns = (data: Rows) =>
   data[0]
-    ? Object.keys(data[0]).reduce((acc, cell) => {
-        acc.push({ content: cell, key: cell });
+    ? Object.keys(data[0]).reduce((acc, value) => {
+        acc.push({ content: value, key: value }); // TODO: Does this key work with complex content?
         return acc;
       }, [])
     : [];
