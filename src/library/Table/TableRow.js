@@ -1,6 +1,7 @@
 /* @flow */
 import React, { PureComponent } from 'react';
 import { isRenderProp } from '../utils';
+import { countRender } from '../utils/RenderCounter';
 import { createStyledComponent } from '../styles';
 import { TableContext } from './TableBase';
 
@@ -104,6 +105,8 @@ const Root = createStyledComponent(
  */
 export default class TableRow extends PureComponent<Props> {
   render() {
+    countRender('TableRow');
+
     return (
       <TableContext.Consumer>
         {(tableContextProps) => {

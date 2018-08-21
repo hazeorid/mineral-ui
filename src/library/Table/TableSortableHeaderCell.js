@@ -1,6 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import { isRenderProp } from '../utils';
+import { countRender } from '../utils/RenderCounter';
 import { createStyledComponent, pxToEm } from '../styles';
 import IconArrowDropdownDown from '../Icon/IconArrowDropdownDown';
 import IconArrowDropdownUp from '../Icon/IconArrowDropdownUp';
@@ -148,6 +149,8 @@ const sortIcon = {
  */
 export default class TableSortableHeaderCell extends Component<Props> {
   render() {
+    countRender('TableSortableHeaderCell');
+
     return (
       <TableContext.Consumer>
         {(tableContextProps) => {

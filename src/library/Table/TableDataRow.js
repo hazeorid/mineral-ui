@@ -1,6 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import deepEqual from 'react-fast-compare';
+import { countRender } from '../utils/RenderCounter';
 import TableSelectableCell from './TableSelectableCell';
 import TableCell from './TableCell';
 import TableRow from './TableRow';
@@ -27,6 +28,8 @@ export default class TableDataRow extends Component<Props> {
   };
 
   render() {
+    countRender('TableDataRow');
+
     const {
       checked,
       columns,

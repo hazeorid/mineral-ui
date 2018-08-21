@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { canUseDOM } from 'exenv';
 import lighten from 'polished/lib/color/lighten';
+import RenderCounter from '../../library/utils/RenderCounter';
 import { pxToEm } from '../../library/styles';
 import { mineralTheme, ThemeProvider } from '../../library/themes';
 import BaselineGrid from './BaselineGrid';
@@ -127,6 +128,12 @@ class App extends Component<Props> {
 
   render() {
     const { demoRoutes } = this.props;
+  showRenderCounter = () => {
+    const { search } = this.props.location || '';
+    return (
+      process.env.NODE_ENV !== 'production' && search.includes('chromeless')
+    );
+  };
 
     return (
       <ThemeProvider>
@@ -134,6 +141,7 @@ class App extends Component<Props> {
           <div>
             <Router demoRoutes={demoRoutes} />
             <BaselineGrid />
+            {this.showRenderCounter() && <RenderCounter />}
           </div>
         </ThemeProvider>
       </ThemeProvider>

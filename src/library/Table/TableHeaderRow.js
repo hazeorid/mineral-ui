@@ -1,6 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import deepEqual from 'react-fast-compare';
+import { countRender } from '../utils/RenderCounter';
 import TableSelectableCell from './TableSelectableCell';
 import TableHeaderCell from './TableHeaderCell';
 import TableSortableHeaderCell from './TableSortableHeaderCell';
@@ -31,6 +32,8 @@ export default class TableHeaderRow extends Component<Props> {
   };
 
   render() {
+    countRender('TableHeaderRow');
+
     const {
       checked,
       columns,

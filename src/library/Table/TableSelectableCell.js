@@ -1,5 +1,6 @@
 /* @flow */
 import React, { Component } from 'react';
+import { countRender } from '../utils/RenderCounter';
 import { createStyledComponent } from '../styles';
 import Checkbox from '../Checkbox';
 import TableCell, {
@@ -49,6 +50,8 @@ export default class TableSelectableCell extends Component<Props> {
   }
 
   render() {
+    countRender('TableSelectableCell');
+
     return (
       <TableContext.Consumer>
         {({ density }) => {

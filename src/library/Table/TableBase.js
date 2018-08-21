@@ -4,6 +4,7 @@ import createReactContext, { type Context } from 'create-react-context';
 import { createStyledComponent } from '../styles';
 import { createThemedComponent, mapComponentThemes } from '../themes';
 import { generateId } from '../utils';
+import { countRender } from '../utils/RenderCounter';
 import TableDataRow from './TableDataRow';
 import TableHeaderRow from './TableHeaderRow';
 import _OverflowContainer, {
@@ -105,6 +106,8 @@ export default class TableBase extends Component<Props, State> {
   titleId: string = `${this.id}-title`;
 
   render() {
+    countRender('TableBase');
+
     const {
       columns,
       data,

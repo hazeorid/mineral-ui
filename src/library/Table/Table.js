@@ -1,6 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import deepEqual from 'react-fast-compare';
+import { countRender } from '../utils/RenderCounter';
 import Selectable from './Selectable';
 import Sortable, { type Comparators } from './Sortable';
 import TableBase from './TableBase';
@@ -203,6 +204,8 @@ class Table extends Component<Props> {
   }
 
   render() {
+    countRender('Table');
+
     const {
       defaultSelectedRows,
       onToggleRow,

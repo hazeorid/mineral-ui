@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import { hideVisually } from 'polished';
 import { createStyledComponent } from '../styles';
+import { countRender } from '../utils/RenderCounter';
 import { TableContext } from './TableBase';
 
 type Props = {
@@ -46,6 +47,8 @@ const Root = createStyledComponent(
  */
 export default class TableHeader extends PureComponent<Props> {
   render() {
+    countRender('TableHeader');
+
     return (
       <TableContext.Consumer>
         {({ highContrast }) => {

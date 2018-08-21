@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import memoizeOne from 'memoize-one';
 import { createStyledComponent, getNormalizedValue, pxToEm } from '../styles';
 import { isRenderProp, rtlTextAlign } from '../utils';
+import { countRender } from '../utils/RenderCounter';
 import { TableContext } from './TableBase';
 
 import { type RenderFn } from './Table';
@@ -102,6 +103,8 @@ export default class TableCell extends PureComponent<Props> {
   );
 
   render() {
+    countRender('TableCell');
+
     return (
       <TableContext.Consumer>
         {(tableContextProps) => {

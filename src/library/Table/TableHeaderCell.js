@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import memoizeOne from 'memoize-one';
 import { isRenderProp } from '../utils';
+import { countRender } from '../utils/RenderCounter';
 import { createStyledComponent, getNormalizedValue, pxToEm } from '../styles';
 import { createThemedComponent, mapComponentThemes } from '../themes';
 import TableCell, {
@@ -151,6 +152,8 @@ export default class TableHeaderCell extends PureComponent<Props> {
   );
 
   render() {
+    countRender('TableHeaderCell');
+
     return (
       <TableContext.Consumer>
         {(tableContextProps) => {
