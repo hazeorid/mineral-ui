@@ -15,15 +15,10 @@ declare var GOOGLE_TRACKING_ID: string;
 type Props = {
   children?: any,
   className?: string,
-  demoRoutes: Array<DemoRoute>,
   history: Object,
-  location?: any
-};
-
-type DemoRoute = {
-  description: string,
-  slug: string,
-  title: string
+  location?: {
+    search: string
+  }
 };
 
 const siteTheme = {
@@ -126,8 +121,6 @@ class App extends Component<Props> {
     }
   }
 
-  render() {
-    const { demoRoutes } = this.props;
   showRenderCounter = () => {
     const { search } = this.props.location || '';
     return (
@@ -135,11 +128,12 @@ class App extends Component<Props> {
     );
   };
 
+  render() {
     return (
       <ThemeProvider>
         <ThemeProvider theme={siteTheme}>
           <div>
-            <Router demoRoutes={demoRoutes} />
+            <Router />
             <BaselineGrid />
             {this.showRenderCounter() && <RenderCounter />}
           </div>
