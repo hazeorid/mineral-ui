@@ -87,7 +87,7 @@ type Props = {
 export type Columns = Array<Column>;
 
 // See demos/Table/index.js additionalTypes for descriptions
-type Column = {
+export type Column = {
   cell?: RenderFn,
   content: React$Node,
   headerCell?: RenderFn,

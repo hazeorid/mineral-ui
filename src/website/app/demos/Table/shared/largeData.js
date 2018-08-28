@@ -1,5 +1,8 @@
 /* @flow */
+import React from 'react';
+import { TableCell, TableRow } from '../../../../../library/Table';
 import { type Columns } from '../../../../../library/Table/Table';
+import { countRender } from '../../../../../library/utils/RenderCounter';
 
 const generateColumns = (width: number, depth: number) => {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -22,9 +25,20 @@ const generateRows = (count: number, columns: Columns) => {
   return [...Array(count).keys()].map((i) => {
     return columns.reduce((acc, column) => {
       acc[column.key] = column.key + i;
+      acc.row = customRow;
       return acc;
     }, {});
   });
+};
+
+const customRow = ({ props }) => {
+  countRender('CustomRow');
+  return <TableRow {...props} />;
+};
+
+const customCell = ({ props }) => {
+  countRender('CustomCell');
+  return <TableCell {...props} />;
 };
 
 export const columns2 = generateColumns(1, 2);
